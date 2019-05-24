@@ -80,10 +80,14 @@
             @endif
 
             <div class="content">
+                <div class="col-md-12">
+                    <h3><a href="{{ route('app.login') }}">APP</a></h3>
+                    <h3><a href="{{ route('admin.login') }}">ADMIN</a></h3>
+                </div>
+
                 <div class="title m-b-md">
                     Laravel
                 </div>
-
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>

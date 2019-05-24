@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Auth::routes(['register' => false]); //app.login
+
 Route::group(['prefix' => 'app', 'as' => 'app.'], function () {
     Route::group(['namespace' => 'App'], function(){
         Route::group(['middleware' => ['auth', 'tenant', 'bindings']], function () {

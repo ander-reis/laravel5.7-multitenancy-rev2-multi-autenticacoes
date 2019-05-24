@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -26,6 +27,13 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        \Route::matched(function(RouteMatched $event){
+            $isAdmin = \Request::is('admin/*');
+            \Section::setSection($isAdmin ? 'admin' : 'app');
+
+            //dd(\Section::get());
+        });
     }
 
     /**
