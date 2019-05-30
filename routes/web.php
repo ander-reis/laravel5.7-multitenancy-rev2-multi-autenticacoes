@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'app', 'as' => 'app.'], function () {
     Route::group(['namespace' => 'App'], function(){
-        Route::group(['middleware' => ['auth', 'tenant', 'bindings']], function () {
+        Route::group(['middleware' => ['auth:app_web', 'tenant', 'bindings']], function () {
             Route::get('dashboard', function () {
                 return view('app.dashboard');
             });
@@ -32,9 +32,9 @@ Route::group(['prefix' => 'app', 'as' => 'app.'], function () {
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::group(['namespace' => 'Admin'], function (){
-        Route::group(['middleware' => ['auth', 'bindings']], function () {
+        Route::group(['middleware' => ['auth:admin_web', 'bindings']], function () {
             Route::get('dashboard', function () {
-                return view('app.dashboard');
+                return view('admin.dashboard');
             });
         });
     });

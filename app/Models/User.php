@@ -4,13 +4,11 @@ namespace App\Models;
 
 use App\Tenant\TenantModels;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use phpDocumentor\Reflection\Types\Parent_;
 
 class User extends Authenticatable
 {
-    use Notifiable, TenantModels;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -46,11 +44,15 @@ class User extends Authenticatable
         return $user;
     }
 
+    public function isType($typeClass)
+    {
+        return $this->userable instanceof $typeClass;
+    }
+
     public function fill(array $attributes)
     {
         !isset($attributes['password'])?: $attributes['password'] = bcrypt($attributes['password']);
         return parent::fill($attributes);
-
     }
 
     public function userable()

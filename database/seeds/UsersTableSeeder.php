@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        \Tenant::setTenant(\App\Models\Company::find(1));
+//        \Tenant::setTenant(\App\Models\Company::find(1));
         $self = $this;
         factory(\App\Models\User::class, 1)
             ->make([

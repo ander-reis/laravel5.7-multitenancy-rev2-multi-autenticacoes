@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
 
 class ForgotPasswordController extends Controller
 {
@@ -27,6 +28,20 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $config = \Section::get('login');
+        $guard = $config['guard'];
+        $this->middleware("guest:$guard");
+    }
+
+    /**
+     * Validate the email for the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function validateEmail(Request $request)
+    {
+        $rule = \Section::getSection() == 'admin' ? 'is_admin' : 'is_user_tenant';
+        $request->validate(['email' => "required|email|$rule"]);
     }
 }

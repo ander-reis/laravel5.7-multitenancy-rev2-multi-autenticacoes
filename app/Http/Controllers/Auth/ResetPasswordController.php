@@ -34,6 +34,29 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $config = \Section::get('login');
+        $guard = $config['guard'];
+        $this->middleware("guest:$guard");
+        $this->redirectTo = $config['redirect_login'];
+    }
+
+    protected function guard()
+    {
+        return \Auth::guard(\Section::get('login.guard'));
+    }
+
+    /**
+     * Get the password reset validation rules.
+     *
+     * @return array
+     */
+    protected function rules()
+    {
+        $rule = \Section::getSection() == 'admin' ? 'is_admin' : 'is_user_tenant';
+        return [
+            'token' => 'required',
+            'email' => "required|email|$rule",
+            'password' => 'required|confirmed|min:6',
+        ];
     }
 }
